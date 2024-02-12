@@ -1,0 +1,6 @@
+{
+	"env": {
+		"DB_STRING": "mongodb+srv://admin:admin0127@cluster0.hlj5ehw.mongodb.net/LibraryDataBase?retryWrites=true&w=majority",
+		"PORT": "https://my-library-backend-93d5c337b919.herokuapp.com/"
+	}
+}
