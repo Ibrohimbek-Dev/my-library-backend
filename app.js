@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 require("dotenv/config");
 const cors = require("cors");
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, connect } = require("mongoose");
 
 app.use(cors({ origin: true }));
 app.use(express.json());
@@ -19,8 +19,6 @@ app.use("/api/stories/", storiesRoute);
 const favouriteRoute = require("./routes/favourite");
 app.use("/api/favourites", favouriteRoute);
 
-const listenPort = process.env.PORT;
-
 mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true });
 mongoose.connection
 	.once("open", () => console.log("Connected"))
@@ -28,4 +26,16 @@ mongoose.connection
 		console.log(`Error : ${error}`);
 	});
 
-app.listen(listenPort, () => console.log(`lisitening to port ${listenPort}`));
+app.listen(process.env.PORT, () =>
+	console.log(`lisitening to port ${listenPort}`)
+);
+
+mongoose
+	.connect(process.env.DB_STRING)
+	.then(() => {
+		app.listen(process.env.PORT || 4000);
+		console.log("listening on port: ", process.env.PORT);
+	})
+	.catch((error) => {
+		console.log(`An error occurred : ${error}`);
+	});
