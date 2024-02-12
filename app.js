@@ -19,6 +19,8 @@ app.use("/api/stories/", storiesRoute);
 const favouriteRoute = require("./routes/favourite");
 app.use("/api/favourites", favouriteRoute);
 
+const PORT = process.env.PORT || 4000;
+
 mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true });
 mongoose.connection
 	.once("open", () => console.log("Connected"))
@@ -26,5 +28,6 @@ mongoose.connection
 		console.log(`Error : ${error}`);
 	});
 
-app.listen(4000, () => console.log("lisitening to port 4000"));
-
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+});
