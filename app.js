@@ -19,20 +19,13 @@ app.use("/api/stories/", storiesRoute);
 const favouriteRoute = require("./routes/favourite");
 app.use("/api/favourites", favouriteRoute);
 
-mongoose.connect(process.env.DB_STRING, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+const listenPort = process.env.PORT;
 
-
-
-mongoose
-	.connect(process.env.DB_STRING)
-	.then(() => {
-		app.listen(process.env.PORT || 4000);
-
-		console.log(process.env ? process.env.PORT : 4000);
-	})
-	.catch((err) => {
-		console.log(err);
+mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true });
+mongoose.connection
+	.once("open", () => console.log("Connected"))
+	.on("error", (error) => {
+		console.log(`Error : ${error}`);
 	});
+
+app.listen(listenPort, () => console.log(`lisitening to port ${listenPort}`));

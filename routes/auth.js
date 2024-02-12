@@ -8,8 +8,9 @@ router.get("/login", async (req, res) => {
 		return res.status(500).send({ message: "Invalid Token" });
 	}
 	const token = req.headers.authorization.split(" ")[1];
+	
 	try {
-		const decodeValue = await admin.auth().verifyIdToken(token);
+		const decodeValue = await admin.auth().verifyIdToken(token);		
 		if (!decodeValue) {
 			return res.status(500).json({ message: "Un Authorize" });
 		}
@@ -35,9 +36,10 @@ const newUserData = async (decodeValue, req, res) => {
 			email_verified: decodeValue.email_verified,
 			role: "member",
 			auth_time: decodeValue.auth_time,
-		});
+		});		
 
 		const savedUser = await newUser.save();
+		
 		res.status(200).send({ user: savedUser });
 	} catch (error) {
 		console.error("Error saving new user:", error);
