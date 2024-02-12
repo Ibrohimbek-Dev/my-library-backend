@@ -26,16 +26,5 @@ mongoose.connection
 		console.log(`Error : ${error}`);
 	});
 
-app.listen(process.env.PORT, () =>
-	console.log(`lisitening to port ${listenPort}`)
-);
+app.listen(4000, () => console.log("lisitening to port 4000"));
 
-mongoose
-	.connect(process.env.DB_STRING)
-	.then(() => {
-		app.listen(process.env.PORT || 4000);
-		console.log("listening on port: ", process.env.PORT);
-	})
-	.catch((error) => {
-		console.log(`An error occurred : ${error}`);
-	});
